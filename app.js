@@ -16,6 +16,7 @@ app.use(
       checkPeriod: 1000 * 60 * 2, // 2 minutes (unit: ms)
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
+      sessionModelName: "user_sessions",
     }),
   }),
 );
