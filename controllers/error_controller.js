@@ -1,5 +1,5 @@
 import { matchedData, validationResult } from "express-validator";
-import { BAD_REQUEST } from "../config.js";
+import { BAD_REQUEST, NOT_FOUND } from "../config.js";
 import { BadRequestError } from "../errors/BadRequestError.js";
 import { NotFoundError } from "../errors/NotFoundError.js";
 
@@ -21,4 +21,10 @@ export const bad_request_handler = (error, req, res, next) => {
 
 export const missing_resource_response = (req, res, next) => {
   next(new NotFoundError("Page not found"));
+};
+
+export const not_found_handler = (error, req, res, next) => {
+  if (error.statusCode !== NOT_FOUND) return next(error);
+  res.locals.message = error.message;
+  res.status(NOT_FOUND).render("page_not_found");
 };
