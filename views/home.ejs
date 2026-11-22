@@ -9,5 +9,8 @@
   <body>
     <h1>File uploader</h1>
     <p>Upload files.</p>
+    <% if (locals.user) { %>
+    Logged in as: <%= user.email %>
+    <% } %>
   </body>
 </html>
