@@ -22,16 +22,28 @@ app.use(
 
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
+app.route("/").get((req, res) => {
   res.render("home");
 });
-app.get("/signup", (req, res) => {
-  res.render("signup");
+app
+  .route("/signup")
+  .get((req, res) => {
+    res.render("signup");
+  })
+  .post((req, res) => {
+    res.send("post signup");
+  });
+app
+  .route("/signin")
+  .get((req, res) => {
+    res.render("signin");
+  })
+  .post((req, res) => {
+    res.send("post signin");
+  });
+app.route("/signout").get((req, res) => {
+  res.send("get signout");
 });
-app.get("/signin", (req, res) => {
-  res.render("signin");
-});
-app.get("/signout", (req, res) => {});
 
 app.listen(3000, (error) => {
   if (error) throw error;
