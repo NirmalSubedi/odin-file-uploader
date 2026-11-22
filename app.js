@@ -44,6 +44,13 @@ passport.deserializeUser((user, done) => {
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.session = req.session;
+  res.locals.page = {};
+  next();
+});
+
 app.use(
   express_session({
     cookie: {
