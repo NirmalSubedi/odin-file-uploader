@@ -74,7 +74,7 @@ app
   .post(async (req, res, next) => {
     try {
       const new_user = req.body;
-      user.password = bcrypt.hash(new_user.password, SALT_LENGTH);
+      user.password = await bcrypt.hash(new_user.password, SALT_LENGTH);
       const user = await db.insert_user(new_user);
       req.login(user, (error) => {
         if (error) next(error);
