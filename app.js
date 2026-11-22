@@ -13,10 +13,15 @@ import {
 } from "./config.js";
 import {
   bad_request_handler,
+  correct_values_for,
   missing_resource_response,
   not_found_handler,
   server_error_handler,
 } from "./controllers/error_controller.js";
+import {
+  check_signin,
+  check_signup,
+} from "./controllers/validate_controller.js";
 import { prisma } from "./lib/prisma.js";
 
 const customFields = {
@@ -86,7 +91,7 @@ app
   .get((req, res) => {
     res.render("signup");
   })
-  .post(async (req, res, next) => {
+  .post(check_signup, correct_values_for("signup"), async (req, res, next) => {
     try {
       const new_user = req.body;
       new_user.password = await bcrypt.hash(new_user.password, SALT_LENGTH);
@@ -105,7 +110,7 @@ app
   .get((req, res) => {
     res.render("signin");
   })
-  .post((req, res, next) => {
+  .post(check_signin, correct_values_for("signin"), (req, res, next) => {
     passport.authenticate("local", (error, user, info) => {
       if (error) return next(error);
       if (!user) {
