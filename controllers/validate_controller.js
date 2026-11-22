@@ -36,3 +36,8 @@ export const check_signup = [
   get_email_field_chain(),
   get_password_field_chain(),
 ];
+
+export const check_signin = [
+  get_email_field_chain(),
+  get_password_field_chain(),
+];
