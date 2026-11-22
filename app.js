@@ -54,6 +54,11 @@ passport.deserializeUser((user, done) => {
 });
 
 const app = express();
+const check_auth = (config) => (req, res, next) => {
+  if (req.isAuthenticated()) next();
+  else if (config?.on_fail) config.on_fail(req, res, next);
+  else res.sendStatus(UNAUTHORIZED);
+};
 
 app.set("view engine", "ejs");
 
