@@ -1,4 +1,13 @@
 import { body } from "express-validator";
+import {
+  EMAIL_MAX_LENGTH,
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MIN_LOWER_CASE,
+  PASSWORD_MIN_NUMBERS,
+  PASSWORD_MIN_SYMBOLS,
+  PASSWORD_MIN_UPPER_CASE,
+} from "../config.js";
 
 const empty_error = "must be filled.";
 
