@@ -11,6 +11,11 @@
     <p>Upload files.</p>
     <% if (locals.user) { %>
     Logged in as: <%= user.email %>
+    <h2>Upload new file</h2>
+    <form action="/upload" method="post">
+      <button type="submit">Upload file</button>
+    </form>
     <% } %>
+
   </body>
 </html>
