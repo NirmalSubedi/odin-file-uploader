@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign in</title>
   </head>
+  <%- include('partials/errors_hook') %>
   <body>
     <%- include('partials/nav') %>
     <h1>Sign in</h1>
+    <%- include('partials/errors') %>
     <p>All fields with (*) are required.</p>
     <form action="/signin" method="post">
       <label for="email">Email*</label>
