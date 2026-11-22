@@ -1,0 +1,17 @@
+<div class="form_field">
+  <label class="form_label" for="<%= locals.name %>"><%= locals.label %><% if(locals.required){%><span class="field_required_text">*</span><% } %></label>
+  <input
+  class="form_input"
+    type="<%= locals.type || 'text' %>"
+    name="<%= locals.name %>"
+    id="<%= locals.name %>"
+    <%if(locals.autofocus) { %>autofocus<% } %>
+    <%if(locals.placeholder){ %>placeholder='<%= placeholder %>'<% } %>
+    <%if(locals.values?.[locals.name]){ %>value='<%= values[locals.name] %>'<% } %>
+    <%if(locals.required){ %>required<% } %>
+    <% if (locals?.errors?.map?.[locals.name]) { %>
+      aria-describedby="<%= locals.name %>_error"
+      aria-invalid="true"
+    <% } %>
+  >
+</div>
