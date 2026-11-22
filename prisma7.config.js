@@ -1,10 +1,10 @@
-import { defineConfig } from "prisma/config";
+import { defineConfig } from "db/config";
 import { connectionString } from "./config.js";
 
 export default defineConfig({
-  schema: "prisma/schema.prisma",
+  schema: "db/schema.prisma",
   migrations: {
-    path: "prisma/migrations",
+    path: "db/migrations",
   },
   datasource: {
     url: connectionString,

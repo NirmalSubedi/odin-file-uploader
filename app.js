@@ -22,7 +22,7 @@ import {
   check_signin,
   check_signup,
 } from "./controllers/validate_controller.js";
-import { prisma } from "./lib/prisma.js";
+import { prisma } from "./db/prisma.js";
 
 const customFields = {
   usernameField: "email",
