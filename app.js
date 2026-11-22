@@ -60,8 +60,18 @@ app
   .get((req, res) => {
     res.render("signup");
   })
-  .post((req, res) => {
-    res.send("post signup");
+  .post(async (req, res, next) => {
+    try {
+      const new_user = req.body;
+      user.password = bcrypt.hash(new_user.password, 10);
+      const user = await db.insert_user(new_user);
+      req.login(user, (error) => {
+        if (error) next(error);
+        res.redirect("/");
+      });
+    } catch (error) {
+      next(error);
+    }
   });
 app
   .route("/signin")
