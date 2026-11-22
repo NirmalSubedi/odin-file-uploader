@@ -14,10 +14,10 @@ passport.use(
   new LocalsStrategy(customFields, async (email, password, done) => {
     try {
       console.log({ email, password });
-      const user = db.get_user({ email });
+      const user = await db.get_user({ email });
       if (!user) return done(null, false, { message: "Incorrect email." });
 
-      const match = bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.password);
       if (!match) return done(null, false, { message: "Incorrect password." });
 
       return done(null, user);
