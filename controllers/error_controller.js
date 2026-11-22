@@ -28,3 +28,10 @@ export const not_found_handler = (error, req, res, next) => {
   res.locals.message = error.message;
   res.status(NOT_FOUND).render("page_not_found");
 };
+
+export const server_error_handler = (error, req, res, next) => {
+  console.error(error);
+  res
+    .status(error.statusCode || INTERNAL_SERVER_ERROR)
+    .send("Something is wrong with the server. Try again later.");
+};
