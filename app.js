@@ -32,7 +32,6 @@ const customFields = {
 passport.use(
   new LocalsStrategy(customFields, async (email, password, done) => {
     try {
-      console.log({ email, password });
       const user = await db.get_user({ email });
       if (!user) return done(null, false, { message: "Incorrect email." });
 
