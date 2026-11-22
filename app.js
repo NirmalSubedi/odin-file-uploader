@@ -73,6 +73,7 @@ app.use(
   }),
 );
 app.use(passport.session());
+app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 
