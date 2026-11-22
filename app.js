@@ -4,7 +4,12 @@ import express from "express";
 import express_session from "express-session";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
-import { PORT, SALT_LENGTH, SESSION_COOKIE_MAX_AGE } from "./config.js";
+import {
+  PORT,
+  SALT_LENGTH,
+  SESSION_COOKIE_MAX_AGE,
+  SESSION_PRUNE_INTERVAL,
+} from "./config.js";
 import { prisma } from "./lib/prisma.js";
 
 const customFields = {
@@ -47,7 +52,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: new PrismaSessionStore(prisma, {
-      checkPeriod: 1000 * 60 * 2, // 2 minutes (unit: ms)
+      checkPeriod: SESSION_PRUNE_INTERVAL,
       dbRecordIdIsSessionId: true,
       sessionModelName: "user_sessions",
     }),
