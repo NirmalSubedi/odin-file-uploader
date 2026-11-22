@@ -20,9 +20,15 @@ app.use(
   }),
 );
 
+app.set("view engine", "ejs");
+
 app.get("/", (req, res) => res.send("Hello World"));
-app.get("/signup", (req, res) => {});
-app.get("/signin", (req, res) => {});
+app.get("/signup", (req, res) => {
+  res.render("signup");
+});
+app.get("/signin", (req, res) => {
+  res.render("signin");
+});
 app.get("/signout", (req, res) => {});
 
 app.listen(3000, (error) => {
