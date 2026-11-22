@@ -63,13 +63,6 @@ const check_auth = (config) => (req, res, next) => {
 
 app.set("view engine", "ejs");
 
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  res.locals.session = req.session;
-  res.locals.page = {};
-  next();
-});
-
 app.use(
   express_session({
     cookie: {
@@ -87,6 +80,13 @@ app.use(
 );
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  res.locals.session = req.session;
+  res.locals.page = {};
+  next();
+});
 
 app.route("/").get((req, res) => {
   res.render("home");
