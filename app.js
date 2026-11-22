@@ -26,8 +26,12 @@ passport.use(
     }
   }),
 );
-passport.serializeUser((user, done) => {});
-passport.deserializeUser((user, done) => {});
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
 
 const app = express();
 app.use(
