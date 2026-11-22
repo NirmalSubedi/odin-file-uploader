@@ -26,14 +26,17 @@ passport.use(
     }
   }),
 );
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
+
 passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
 const app = express();
+
 app.use(
   express_session({
     cookie: {
@@ -55,6 +58,7 @@ app.set("view engine", "ejs");
 app.route("/").get((req, res) => {
   res.render("home");
 });
+
 app
   .route("/signup")
   .get((req, res) => {
@@ -73,6 +77,7 @@ app
       next(error);
     }
   });
+
 app
   .route("/signin")
   .get((req, res) => {
@@ -90,6 +95,7 @@ app
       });
     })(req, res, next);
   });
+
 app.route("/signout").get((req, res, next) => {
   req.logout((error) => {
     if (error) return next(error);
