@@ -1,4 +1,4 @@
-import prisma_session_store from "@quixo3/prisma-session-store";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import express from "express";
 import express_session from "express-session";
 import { prisma } from "./lib/prisma.js";
@@ -12,7 +12,7 @@ app.use(
     secret: "a",
     resave: false,
     saveUninitialized: false,
-    store: new prisma_session_store(prisma, {
+    store: new PrismaSessionStore(prisma, {
       checkPeriod: 1000 * 60 * 2, // 2 minutes (unit: ms)
       dbRecordIdIsSessionId: true,
       sessionModelName: "user_sessions",
