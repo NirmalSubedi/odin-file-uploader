@@ -1,0 +1,5 @@
+<% if (locals.errors) { %>
+<% locals.page.has_error = true %>
+<% errors.map = errors.mapped() %>
+<% page.errors_list = errors.array({onlyFirstError:true}) %>
+<% } %>
