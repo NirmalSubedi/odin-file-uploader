@@ -7,8 +7,8 @@ const get_email_field_chain = () =>
     .trim()
     .notEmpty()
     .withMessage(`Email ${empty_error}`)
-    .isLength({ max: USERNAME_MAX_LENGTH })
-    .withMessage(`Email must not exceed ${USERNAME_MAX_LENGTH} characters.`)
+    .isLength({ max: EMAIL_MAX_LENGTH })
+    .withMessage(`Email must not exceed ${EMAIL_MAX_LENGTH} characters.`)
     .isEmail()
     .withMessage(
       "Email must be formatted correctly (e.g., johndoe@example.com).",
