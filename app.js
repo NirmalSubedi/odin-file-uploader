@@ -66,6 +66,7 @@ app.use(
     }),
   }),
 );
+app.use(passport.session());
 
 app.set("view engine", "ejs");
 
