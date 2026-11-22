@@ -9,6 +9,7 @@ import {
   SALT_LENGTH,
   SESSION_COOKIE_MAX_AGE,
   SESSION_PRUNE_INTERVAL,
+  SESSION_SECRET,
 } from "./config.js";
 import { prisma } from "./lib/prisma.js";
 
@@ -48,7 +49,7 @@ app.use(
     cookie: {
       maxAge: SESSION_COOKIE_MAX_AGE,
     },
-    secret: "a",
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new PrismaSessionStore(prisma, {
