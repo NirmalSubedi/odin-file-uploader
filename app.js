@@ -78,8 +78,17 @@ app
   .get((req, res) => {
     res.render("signin");
   })
-  .post((req, res) => {
-    res.send("post signin");
+  .post((req, res, next) => {
+    passport.authenticate("local", (error, user, info) => {
+      if (error) return next(error);
+      if (!user) {
+        return res.redirect("/signin");
+      }
+      req.login(user, (error) => {
+        if (error) return next(error);
+        res.redirect("/");
+      });
+    })(req, res, next);
   });
 app.route("/signout").get((req, res) => {
   res.send("get signout");
