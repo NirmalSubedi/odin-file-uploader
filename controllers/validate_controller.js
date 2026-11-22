@@ -44,6 +44,12 @@ const get_password_field_chain = () =>
 export const check_signup = [
   get_email_field_chain(),
   get_password_field_chain(),
+  body("confirm_password")
+    .trim()
+    .notEmpty()
+    .withMessage(`Confirm password ${empty_error}`)
+    .custom((value, { req }) => req.body.password === value)
+    .withMessage("Confirm password must match password."),
 ];
 
 export const check_signin = [
