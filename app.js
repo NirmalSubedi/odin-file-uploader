@@ -21,6 +21,9 @@ app.use(
 );
 
 app.get("/", (req, res) => res.send("Hello World"));
+app.get("/signup", (req, res) => {});
+app.get("/signin", (req, res) => {});
+app.get("/signout", (req, res) => {});
 
 app.listen(3000, (error) => {
   if (error) throw error;
