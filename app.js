@@ -90,8 +90,11 @@ app
       });
     })(req, res, next);
   });
-app.route("/signout").get((req, res) => {
-  res.send("get signout");
+app.route("/signout").get((req, res, next) => {
+  req.logout((error) => {
+    if (error) return next(error);
+    res.redirect("/");
+  });
 });
 
 app.listen(3000, (error) => {
