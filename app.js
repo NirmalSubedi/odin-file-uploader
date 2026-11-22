@@ -22,7 +22,9 @@ app.use(
 
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => res.send("Hello World"));
+app.get("/", (req, res) => {
+  res.render("home");
+});
 app.get("/signup", (req, res) => {
   res.render("signup");
 });
