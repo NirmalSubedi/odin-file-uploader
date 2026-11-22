@@ -1,7 +1,14 @@
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
+import bcrypt from "bcrypt";
 import express from "express";
 import express_session from "express-session";
+import passport from "passport";
+import { Strategy as LocalsStrategy } from "passport-local";
 import { prisma } from "./lib/prisma.js";
+
+passport.use(new LocalsStrategy(async (username, password, done) => {}));
+passport.serializeUser((user, done) => {});
+passport.deserializeUser((user, done) => {});
 
 const app = express();
 app.use(
