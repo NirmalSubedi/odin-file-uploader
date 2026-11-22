@@ -6,7 +6,26 @@ import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import { prisma } from "./lib/prisma.js";
 
-passport.use(new LocalsStrategy(async (username, password, done) => {}));
+const customFields = {
+  usernameField: "email",
+};
+
+passport.use(
+  new LocalsStrategy(customFields, async (email, password, done) => {
+    try {
+      console.log({ email, password });
+      const user = db.get_user({ email });
+      if (!user) return done(null, false, { message: "Incorrect email." });
+
+      const match = bcrypt.compare(password, user.password);
+      if (!match) return done(null, false, { message: "Incorrect password." });
+
+      return done(null, user);
+    } catch (error) {
+      done(error);
+    }
+  }),
+);
 passport.serializeUser((user, done) => {});
 passport.deserializeUser((user, done) => {});
 
