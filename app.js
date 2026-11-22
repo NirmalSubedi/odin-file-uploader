@@ -116,7 +116,7 @@ app
     res.render("signin");
   })
   .post(check_signin, correct_values_for("signin"), (req, res, next) => {
-    passport.authenticate("local", (error, user, info) => {
+    passport.authenticate("local", (error, user) => {
       if (error) return next(error);
       if (!user) {
         return res.redirect("/signin");
