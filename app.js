@@ -50,6 +50,8 @@ passport.deserializeUser((user, done) => {
 
 const app = express();
 
+app.set("view engine", "ejs");
+
 app.use((req, res, next) => {
   res.locals.user = req.user;
   res.locals.session = req.session;
@@ -74,8 +76,6 @@ app.use(
 );
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
-
-app.set("view engine", "ejs");
 
 app.route("/").get((req, res) => {
   res.render("home");
