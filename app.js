@@ -4,7 +4,7 @@ import express from "express";
 import express_session from "express-session";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
-import { PORT } from "./config.js";
+import { PORT, SALT_LENGTH, SESSION_COOKIE_MAX_AGE } from "./config.js";
 import { prisma } from "./lib/prisma.js";
 
 const customFields = {
@@ -41,7 +41,7 @@ const app = express();
 app.use(
   express_session({
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days (unit: ms)
+      maxAge: SESSION_COOKIE_MAX_AGE,
     },
     secret: "a",
     resave: false,
@@ -68,7 +68,7 @@ app
   .post(async (req, res, next) => {
     try {
       const new_user = req.body;
-      user.password = bcrypt.hash(new_user.password, 10);
+      user.password = bcrypt.hash(new_user.password, SALT_LENGTH);
       const user = await db.insert_user(new_user);
       req.login(user, (error) => {
         if (error) next(error);

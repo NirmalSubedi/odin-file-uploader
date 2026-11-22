@@ -14,3 +14,7 @@ export const PASSWORD_MIN_LOWER_CASE = 1;
 export const PASSWORD_MIN_UPPER_CASE = 1;
 export const PASSWORD_MIN_NUMBERS = 1;
 export const PASSWORD_MIN_SYMBOLS = 1;
+
+// Server values
+export const SALT_LENGTH = 10;
+export const SESSION_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7; // 7 days (unit: ms)
