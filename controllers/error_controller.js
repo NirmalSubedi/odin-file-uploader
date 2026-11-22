@@ -1,5 +1,5 @@
 import { matchedData, validationResult } from "express-validator";
-import { BAD_REQUEST, NOT_FOUND } from "../config.js";
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } from "../config.js";
 import { BadRequestError } from "../errors/BadRequestError.js";
 import { NotFoundError } from "../errors/NotFoundError.js";
 
