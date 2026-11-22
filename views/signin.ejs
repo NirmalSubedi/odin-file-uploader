@@ -12,10 +12,8 @@
     <%- include('partials/errors') %>
     <p>All fields with (*) are required.</p>
     <form action="/signin" method="post">
-      <label for="email">Email*</label>
-      <input type="email" id="email" name="email">
-      <label for="password">Password*</label>
-      <input type="password" id="password" name="password">
+      <%- include('partials/input', {label:'Email', name: 'email', type:'email', autofocus: !page.has_error, required: true}) %>
+      <%- include('partials/input', {label:'Password', name: 'password', type:'password', required: true}) %>
       <button type="submit">Sign in</button>
     </form>
   </body>
