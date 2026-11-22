@@ -11,6 +11,12 @@ import {
   SESSION_PRUNE_INTERVAL,
   SESSION_SECRET,
 } from "./config.js";
+import {
+  bad_request_handler,
+  missing_resource_response,
+  not_found_handler,
+  server_error_handler,
+} from "./controllers/error_controller.js";
 import { prisma } from "./lib/prisma.js";
 
 const customFields = {
@@ -117,6 +123,11 @@ app.route("/signout").get((req, res, next) => {
     res.redirect("/");
   });
 });
+
+app.use(missing_resource_response);
+app.use(not_found_handler);
+app.use(bad_request_handler);
+app.use(server_error_handler);
 
 app.listen(PORT, (error) => {
   if (error) throw error;
