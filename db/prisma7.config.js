@@ -1,5 +1,5 @@
 import { defineConfig } from "db/config";
-import { connectionString } from "./config.js";
+import { connectionString } from "../config.js";
 
 export default defineConfig({
   schema: "db/schema.prisma",
