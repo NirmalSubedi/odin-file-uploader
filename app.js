@@ -2,6 +2,7 @@ import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import bcrypt from "bcrypt";
 import express from "express";
 import express_session from "express-session";
+import { matchedData } from "express-validator";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
@@ -98,7 +99,7 @@ app
   })
   .post(check_signup, correct_values_for("signup"), async (req, res, next) => {
     try {
-      const new_user = req.body;
+      const new_user = matchedData(req);
       new_user.password = await bcrypt.hash(new_user.password, SALT_LENGTH);
       const user = await db.insert_user(new_user);
       req.login(user, (error) => {
