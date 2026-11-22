@@ -20,3 +20,6 @@ export const PASSWORD_MIN_SYMBOLS = 1;
 export const SALT_LENGTH = 10;
 export const SESSION_COOKIE_MAX_AGE = 1000 * 60 * 60 * 24 * 7; // 7 days (unit: ms)
 export const SESSION_PRUNE_INTERVAL = 1000 * 60 * 10; // 10 minutes (unit: ms)
+
+// Http status codes
+export const BAD_REQUEST = 400;
