@@ -3,6 +3,7 @@ try {
   process.loadEnvFile(".env");
 } catch {}
 
+export const PORT = process.env.PORT || 3000;
 export const connectionString = process.env.DATABASE_URL;
 
 // Form constraints

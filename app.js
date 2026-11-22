@@ -4,6 +4,7 @@ import express from "express";
 import express_session from "express-session";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
+import { PORT } from "./config.js";
 import { prisma } from "./lib/prisma.js";
 
 const customFields = {
@@ -103,7 +104,7 @@ app.route("/signout").get((req, res, next) => {
   });
 });
 
-app.listen(3000, (error) => {
+app.listen(PORT, (error) => {
   if (error) throw error;
-  console.log("App listening on port 3000");
+  console.log(`App listening on port ${PORT}`);
 });
