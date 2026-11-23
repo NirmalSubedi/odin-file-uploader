@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import express from "express";
 import express_session from "express-session";
 import { body, matchedData, validationResult } from "express-validator";
+import multer from "multer";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
@@ -68,6 +69,7 @@ const check_auth = (config) => (req, res, next) => {
   else if (config?.on_fail) config.on_fail(req, res, next);
   else res.sendStatus(UNAUTHORIZED);
 };
+const upload = multer({ dest: "./uploads" });
 
 app.set("view engine", "ejs");
 
@@ -171,7 +173,7 @@ app.route("/signout").get((req, res, next) => {
   });
 });
 
-app.route("/upload").post(check_auth(), (req, res) => {
+app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
