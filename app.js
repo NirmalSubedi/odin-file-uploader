@@ -142,6 +142,10 @@ app
 app
   .route("/signin")
   .get((req, res) => {
+    if (req.session?.locals_values) {
+      res.locals.values = req.session.locals_values;
+      delete req.session.locals_values;
+    }
     res.render("signin");
   })
   .post(check_signin, correct_values_for("signin"), (req, res, next) => {
