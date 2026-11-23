@@ -171,6 +171,10 @@ app.route("/signout").get((req, res, next) => {
   });
 });
 
+app.route("/upload").post((req, res) => {
+  res.send("uploaded file");
+});
+
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
