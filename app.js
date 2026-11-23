@@ -171,8 +171,8 @@ app.route("/signout").get((req, res, next) => {
   });
 });
 
-app.route("/upload").post((req, res) => {
-  res.send("uploaded file");
+app.route("/upload").post(check_auth(), (req, res) => {
+  res.redirect("/");
 });
 
 app.use(missing_resource_response);
