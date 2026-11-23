@@ -2,7 +2,7 @@ import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import bcrypt from "bcrypt";
 import express from "express";
 import express_session from "express-session";
-import { matchedData } from "express-validator";
+import { body, matchedData, validationResult } from "express-validator";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
@@ -97,19 +97,39 @@ app
   .get((req, res) => {
     res.render("signup");
   })
-  .post(check_signup, correct_values_for("signup"), async (req, res, next) => {
-    try {
-      const new_user = matchedData(req);
-      new_user.password = await bcrypt.hash(new_user.password, SALT_LENGTH);
-      const user = await db.insert_user(new_user);
-      req.login(user, (error) => {
-        if (error) next(error);
-        res.redirect("/");
-      });
-    } catch (error) {
-      next(error);
-    }
-  });
+  .post(
+    check_signup,
+    body("email").custom(async (_, { req }) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) return true;
+      try {
+        const new_user = matchedData(req);
+        new_user.password = await bcrypt.hash(new_user.password, SALT_LENGTH);
+        req.user = await db.insert_user(new_user);
+      } catch (error) {
+        if (
+          error.message.includes(
+            "Unique constraint failed on the constraint: `users_email_key",
+          )
+        ) {
+          error.message = "Email is already in use.";
+        }
+        throw error;
+      }
+      return true;
+    }),
+    correct_values_for("signup"),
+    async (req, res, next) => {
+      try {
+        req.login(req.user, (error) => {
+          if (error) next(error);
+          res.redirect("/");
+        });
+      } catch (error) {
+        next(error);
+      }
+    },
+  );
 
 app
   .route("/signin")
