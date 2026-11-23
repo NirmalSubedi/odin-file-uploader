@@ -37,7 +37,7 @@ passport.use(
       if (!user)
         return done(null, false, {
           path: "email",
-          msg: "Incorrect email.",
+          msg: "No user exists with that email.",
         });
 
       const match = await bcrypt.compare(password, user.password);
