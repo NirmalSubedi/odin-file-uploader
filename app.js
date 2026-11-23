@@ -147,6 +147,7 @@ app
       delete req.session.locals_values;
     }
     res.render("signin");
+    if (req.session?.auth_fail_info) delete req.session.auth_fail_info;
   })
   .post(check_signin, correct_values_for("signin"), (req, res, next) => {
     passport.authenticate("local", (error, user, info) => {
@@ -159,7 +160,6 @@ app
       req.login(user, (error) => {
         if (error) return next(error);
         res.redirect("/");
-        if (req.session.auth_fail_info) delete req.session.auth_fail_info;
       });
     })(req, res, next);
   });
