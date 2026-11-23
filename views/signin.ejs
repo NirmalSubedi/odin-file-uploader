@@ -1,4 +1,8 @@
 <%- include('partials/errors_hook') %>
+<% if(locals.session?.auth_fail_info) {%>
+  <% const {path, msg} = session.auth_fail_info; %>
+  <%- include('partials/errors_hook', {errors: { mapped: () => ({[path]:msg}), array: ()=> [{path,msg}] }}) %>
+<% } %>
 <!DOCTYPE html>
 <html lang="en">
   <head>

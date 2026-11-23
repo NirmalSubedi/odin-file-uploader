@@ -34,10 +34,18 @@ passport.use(
   new LocalsStrategy(customFields, async (email, password, done) => {
     try {
       const user = await db.get_user({ email });
-      if (!user) return done(null, false, { message: "Incorrect email." });
+      if (!user)
+        return done(null, false, {
+          path: "email",
+          msg: "Incorrect email.",
+        });
 
       const match = await bcrypt.compare(password, user.password);
-      if (!match) return done(null, false, { message: "Incorrect password." });
+      if (!match)
+        return done(null, false, {
+          path: "password",
+          msg: "Incorrect password.",
+        });
 
       return done(null, user);
     } catch (error) {
@@ -137,14 +145,17 @@ app
     res.render("signin");
   })
   .post(check_signin, correct_values_for("signin"), (req, res, next) => {
-    passport.authenticate("local", (error, user) => {
+    passport.authenticate("local", (error, user, info) => {
       if (error) return next(error);
       if (!user) {
+        if (info) req.session.auth_fail_info = info;
+        req.session.locals_values = matchedData(req, { onlyValidData: false });
         return res.redirect("/signin");
       }
       req.login(user, (error) => {
         if (error) return next(error);
         res.redirect("/");
+        if (req.session.auth_fail_info) delete req.session.auth_fail_info;
       });
     })(req, res, next);
   });
