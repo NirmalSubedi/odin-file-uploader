@@ -40,3 +40,11 @@ export const update_folder = async (folder) => {
   });
   return result;
 };
+
+export const delete_folder = async (folder) => {
+  const { id } = folder;
+  const result = await prisma.users.delete({
+    where: { id },
+  });
+  return result;
+};
