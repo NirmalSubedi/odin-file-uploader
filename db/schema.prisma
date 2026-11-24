@@ -21,7 +21,8 @@ model users {
 }
 
 model folders {
+  id         Int    @id @default(autoincrement())
+  name       String
   user       users  @relation(fields: [user_email], references: [email])
   user_email String
-  name       String
 }
