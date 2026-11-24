@@ -23,3 +23,11 @@ export const insert_folder = async (folder) => {
   });
   return result;
 };
+
+export const select_folder = async (folder) => {
+  const {id} = folder;
+  const result = await prisma.users.findFirst({
+    where:{id};
+  })
+  return result;
+}
