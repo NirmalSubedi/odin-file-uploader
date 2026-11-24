@@ -8,8 +8,9 @@ datasource db {
 }
 
 model users {
-  email    String @id
+  email    String    @id
   password String
+  folders  folders[]
 }
 
 model user_sessions {
@@ -17,4 +18,10 @@ model user_sessions {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model folders {
+  user       users  @relation(fields: [user_email], references: [email])
+  user_email String
+  name       String
 }
