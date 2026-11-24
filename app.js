@@ -177,19 +177,19 @@ app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
-app.route("/folder/:id").get(check_auth(), (req, res) => {
+app.route("/folder/:id").get(check_auth(), async (req, res) => {
   res.send("select folder");
 });
 
-app.route("/folder/insert").post(check_auth(), (req, res) => {
+app.route("/folder/insert").post(check_auth(), async (req, res) => {
   res.send("insert folder");
 });
 
-app.route("/folder/update/:id").post(check_auth(), (req, res) => {
+app.route("/folder/update/:id").post(check_auth(), async (req, res) => {
   res.send("update folder");
 });
 
-app.route("/folder/delete/:id").post(check_auth(), (req, res) => {
+app.route("/folder/delete/:id").post(check_auth(), async (req, res) => {
   res.send("delete folder");
 });
 
