@@ -177,15 +177,19 @@ app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
-app.route("/insert_folder").post((req, res) => {
+app.route("/folder/:id").get((req, res) => {
+  res.send("select folder");
+});
+
+app.route("/folder/insert").post((req, res) => {
   res.send("insert folder");
 });
 
-app.route("/update_folder/:id").post((req, res) => {
+app.route("/folder/update/:id").post((req, res) => {
   res.send("update folder");
 });
 
-app.route("/delete_folder/:id").post((req, res) => {
+app.route("/folder/delete/:id").post((req, res) => {
   res.send("delete folder");
 });
 
