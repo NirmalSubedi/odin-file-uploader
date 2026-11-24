@@ -31,3 +31,12 @@ export const select_folder = async (folder) => {
   });
   return result;
 };
+
+export const update_folder = async (folder) => {
+  const { name, id } = folder;
+  const result = await prisma.users.update({
+    where: { id },
+    data: { name },
+  });
+  return result;
+};
