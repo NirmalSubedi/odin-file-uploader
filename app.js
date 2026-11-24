@@ -181,6 +181,10 @@ app.route("/insert_folder").post((req, res) => {
   res.send("insert folder");
 });
 
+app.route("/update_folder/:id").post((req, res) => {
+  res.send("update folder");
+});
+
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
