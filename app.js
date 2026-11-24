@@ -183,15 +183,15 @@ app.route("/folders").get(check_auth(), async (req, res) => {
   res.render("folders");
 });
 
-app.route("/folders/:id").get(check_auth(), async (req, res) => {
-  res.send("select a folder");
-});
-
 app.route("/folders/insert").post(check_auth(), async (req, res) => {
   const { email: user_email } = req.user;
   const { name } = req.body;
   await db.insert_folder({ name, user_email });
   res.redirect("/folders");
+});
+
+app.route("/folders/:id").get(check_auth(), async (req, res) => {
+  res.send("select a folder");
 });
 
 app.route("/folders/update/:id").post(check_auth(), async (req, res) => {
