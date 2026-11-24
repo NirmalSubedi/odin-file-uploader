@@ -28,7 +28,7 @@ export const select_folder = async (folder) => {
   const { id } = folder;
   const result = await prisma.users.findFirst({
     where: { id },
-    select: { files: true },
+    include: { files: true },
   });
   return result;
 };
@@ -37,7 +37,7 @@ export const select_user_folders = async (user) => {
   const { email } = user;
   const { folders } = await prisma.users.findFirst({
     where: { email },
-    select: { folders: true },
+    include: { folders: true },
   });
   return folders;
 };

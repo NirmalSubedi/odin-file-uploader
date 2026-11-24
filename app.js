@@ -191,7 +191,8 @@ app.route("/folders/insert").post(check_auth(), async (req, res) => {
 });
 
 app.route("/folders/:id").get(check_auth(), async (req, res) => {
-  res.send("select a folder");
+  res.locals.folder;
+  res.render("folder");
 });
 
 app.route("/folders/update/:id").post(check_auth(), async (req, res) => {
