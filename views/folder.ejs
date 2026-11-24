@@ -6,6 +6,7 @@
     <%- include('partials/title', {title:`Folder: ${folder.name}`}) %>
   </head>
   <body>
+    <%- include('partials/nav') %>
     <h1><%= folder.name %></h1>
     <% if (folder.files.length>0) { %>
     <ul>
