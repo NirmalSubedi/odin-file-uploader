@@ -1,11 +1,13 @@
-/*
-  Warnings:
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
 
-  - You are about to drop the `Session` table. If the table is not empty, all the data it contains will be lost.
+-- CreateTable
+CREATE TABLE "users" (
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
 
-*/
--- DropTable
-DROP TABLE "Session";
+    CONSTRAINT "users_pkey" PRIMARY KEY ("email")
+);
 
 -- CreateTable
 CREATE TABLE "user_sessions" (
@@ -18,4 +20,8 @@ CREATE TABLE "user_sessions" (
 );
 
 -- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "user_sessions_sid_key" ON "user_sessions"("sid");
+
