@@ -177,8 +177,12 @@ app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
+app.route("/folders").get(check_auth(), async (req, res) => {
+  res.send("select all folders");
+});
+
 app.route("/folder/:id").get(check_auth(), async (req, res) => {
-  res.send("select folder");
+  res.send("select a folder");
 });
 
 app.route("/folder/insert").post(check_auth(), async (req, res) => {
