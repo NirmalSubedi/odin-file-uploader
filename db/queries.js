@@ -32,6 +32,11 @@ export const select_folder = async (folder) => {
   return result;
 };
 
+export const select_all_folders = async () => {
+  const result = await prisma.folders.findMany();
+  return result;
+};
+
 export const update_folder = async (folder) => {
   const { name, id } = folder;
   const result = await prisma.users.update({
