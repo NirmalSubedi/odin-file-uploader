@@ -177,6 +177,10 @@ app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
   res.redirect("/");
 });
 
+app.route("/insert_folder").post((req, res) => {
+  res.send("insert folder");
+});
+
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
