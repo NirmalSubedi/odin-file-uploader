@@ -181,19 +181,19 @@ app.route("/folders").get(check_auth(), async (req, res) => {
   res.send("select all folders");
 });
 
-app.route("/folder/:id").get(check_auth(), async (req, res) => {
+app.route("/folders/:id").get(check_auth(), async (req, res) => {
   res.send("select a folder");
 });
 
-app.route("/folder/insert").post(check_auth(), async (req, res) => {
+app.route("/folders/insert").post(check_auth(), async (req, res) => {
   res.send("insert folder");
 });
 
-app.route("/folder/update/:id").post(check_auth(), async (req, res) => {
+app.route("/folders/update/:id").post(check_auth(), async (req, res) => {
   res.send("update folder");
 });
 
-app.route("/folder/delete/:id").post(check_auth(), async (req, res) => {
+app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
   res.send("delete folder");
 });
 
