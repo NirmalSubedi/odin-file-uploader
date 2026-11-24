@@ -7,9 +7,9 @@
   </head>
   <body>
     <h1><%= folder.name %></h1>
-    <% if (local.files) { %>
+    <% if (folder.files.length>0) { %>
     <ul>
-      <% files.forEach(file => { %>
+      <% folder.files.forEach(file => { %>
       <li><%= file.name %></li>
       <% }) %>
     </ul>
