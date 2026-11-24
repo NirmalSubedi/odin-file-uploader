@@ -26,6 +26,7 @@ import {
 } from "./controllers/validate_controller.js";
 import { prisma } from "./db/prisma.js";
 import * as db from "./db/queries.js";
+import { NotFoundError } from "./errors/NotFoundError.js";
 
 const customFields = {
   usernameField: "email",
@@ -190,9 +191,13 @@ app.route("/folders/insert").post(check_auth(), async (req, res) => {
   res.redirect("/folders");
 });
 
-app.route("/folders/:id").get(check_auth(), async (req, res) => {
-  res.locals.folder;
-  res.render("folder");
+app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
+  const { id } = req.params;
+  const folder = await db.select_folder({ id });
+  if (folder) {
+    res.locals.folder = folder;
+    res.render("folder");
+  } else next(new NotFoundError("Folder not found"));
 });
 
 app.route("/folders/update/:id").post(check_auth(), async (req, res) => {
