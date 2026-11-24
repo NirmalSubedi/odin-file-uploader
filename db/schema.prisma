@@ -7,17 +7,17 @@ datasource db {
   provider = "postgresql"
 }
 
-model users {
-  email    String    @id
-  password String
-  folders  folders[]
-}
-
 model user_sessions {
   id        String   @id
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+model users {
+  email    String    @id
+  password String
+  folders  folders[]
 }
 
 model folders {
