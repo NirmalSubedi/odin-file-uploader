@@ -185,6 +185,10 @@ app.route("/update_folder/:id").post((req, res) => {
   res.send("update folder");
 });
 
+app.route("/delete_folder/:id").post((req, res) => {
+  res.send("delete folder");
+});
+
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
