@@ -188,7 +188,10 @@ app.route("/folders/:id").get(check_auth(), async (req, res) => {
 });
 
 app.route("/folders/insert").post(check_auth(), async (req, res) => {
-  res.send("insert folder");
+  const { email: user_email } = req.user;
+  const { name } = req.body;
+  await db.insert_folder({ name, user_email });
+  res.redirect("/folders");
 });
 
 app.route("/folders/update/:id").post(check_auth(), async (req, res) => {

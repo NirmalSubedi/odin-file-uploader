@@ -9,7 +9,7 @@
     <h1><%= folder.name %></h1>
     <%- include('partials/errors') %>
     <form action="./folders/insert" method="post">
-      <%- include('partials/input', {label:'New folder', name:'folder_name', placeholder:'Name' required: true}) %>
+      <%- include('partials/input', {label:'New folder', name:'name', placeholder:'Name' required: true}) %>
       <button type="submit">Create folder</button>
     </form>
     <% if (local.files) { %>
