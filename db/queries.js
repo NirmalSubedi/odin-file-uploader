@@ -15,3 +15,11 @@ export const select_user = async (user_to_find) => {
   });
   return user;
 };
+
+export const insert_folder = async (folder) => {
+  const { name, user_email } = folder;
+  const result = await prisma.folders.create({
+    data: { name, user_email },
+  });
+  return result;
+};
