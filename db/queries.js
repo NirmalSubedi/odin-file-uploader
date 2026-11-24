@@ -25,8 +25,8 @@ export const insert_folder = async (folder) => {
 };
 
 export const select_folder = async (folder) => {
-  const { id } = folder;
-  const result = await prisma.users.findFirst({
+  const id = Number(folder.id);
+  const result = await prisma.folders.findFirst({
     where: { id },
     include: { files: true },
   });
