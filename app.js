@@ -179,7 +179,7 @@ app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
 
 app.route("/folders").get(check_auth(), async (req, res) => {
   const { email } = req.user;
-  res.locals.folders = await db.select_all_user_folders({ email });
+  res.locals.folders = await db.select_user_folders({ email });
   res.render("folders");
 });
 

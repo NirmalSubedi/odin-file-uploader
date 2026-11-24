@@ -32,7 +32,7 @@ export const select_folder = async (folder) => {
   return result;
 };
 
-export const select_all_user_folders = async (user) => {
+export const select_user_folders = async (user) => {
   const { email } = user;
   const { folders } = await prisma.users.findFirst({
     where: { email },
