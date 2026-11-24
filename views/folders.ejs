@@ -11,7 +11,7 @@
       <%- include('partials/input', {label:'New folder', name:'name', placeholder:'Name', required: true}) %>
       <button type="submit">Create folder</button>
     </form>
-    <% if (locals.folders) { %>
+    <% if (locals.folders.length>0) { %>
     <ul>
       <% folders.forEach(folder => { %>
       <li><a href="./folders/<%= folder.id %>"><%= folder.name %></a></li>
