@@ -23,14 +23,14 @@ model users {
 model folders {
   id         Int     @id @default(autoincrement())
   name       String
+  files      files[]
   user       users   @relation(fields: [user_email], references: [email])
   user_email String
-  files      files[]
 }
 
 model files {
   id        Int     @id @default(autoincrement())
+  content   String
   folder    folders @relation(fields: [folder_id], references: [id])
   folder_id Int
-  content   String
 }
