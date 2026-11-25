@@ -25,7 +25,7 @@ export const bad_request_handler = (error, req, res, next) => {
 };
 
 export const missing_resource_response = (req, res, next) => {
-  next(new NotFoundError("Page not found"));
+  next(new NotFoundError("The page you are looking for could not be found."));
 };
 
 export const not_found_handler = (error, req, res, next) => {
