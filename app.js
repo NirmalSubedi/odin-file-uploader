@@ -7,7 +7,6 @@ import multer from "multer";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
-  FORBIDDEN,
   PORT,
   SALT_LENGTH,
   SESSION_COOKIE_MAX_AGE,
@@ -17,6 +16,7 @@ import {
 import {
   bad_request_handler,
   correct_values_for,
+  forbidden_error_handler,
   missing_resource_response,
   not_found_handler,
   server_error_handler,
@@ -27,6 +27,7 @@ import {
 } from "./controllers/validate_controller.js";
 import { prisma } from "./db/prisma.js";
 import * as db from "./db/queries.js";
+import { ForbiddenError } from "./errors/ForbiddenError.js";
 import { NotFoundError } from "./errors/NotFoundError.js";
 
 const customFields = {
@@ -200,7 +201,8 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
     if (is_folder_owner) {
       res.locals.folder = folder;
       res.render("folder");
-    } else res.sendStatus(FORBIDDEN);
+    } else
+      next(new ForbiddenError("You do not have access to view this folder."));
   } else next(new NotFoundError("Folder not found"));
 });
 
@@ -215,6 +217,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
+app.use(forbidden_error_handler);
 app.use(server_error_handler);
 
 app.listen(PORT, (error) => {
