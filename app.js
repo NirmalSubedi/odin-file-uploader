@@ -223,7 +223,7 @@ app
       const is_folder_owner = folder.user_email === req.user.email;
       if (is_folder_owner) {
         res.locals.folder = folder;
-        res.render("folder_update_form");
+        res.render("folder_update");
       } else
         next(
           new ForbiddenError("You do not have access to update this folder."),
