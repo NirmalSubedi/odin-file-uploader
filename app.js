@@ -215,6 +215,7 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
 
 app
   .route("/folders/update/:id")
+  .all(check_auth())
   .get((req, res) => {
     res.send("render folder to update");
   })
