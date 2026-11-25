@@ -4,6 +4,7 @@ import {
   FORBIDDEN,
   INTERNAL_SERVER_ERROR,
   NOT_FOUND,
+  UNAUTHORIZED,
 } from "../config.js";
 import { BadRequestError } from "../errors/BadRequestError.js";
 import { NotFoundError } from "../errors/NotFoundError.js";
@@ -33,6 +34,13 @@ export const not_found_handler = (error, req, res, next) => {
   res.locals.title = "Page not found";
   res.locals.error = error;
   res.status(NOT_FOUND).render("http_error");
+};
+
+export const unauthorized_handler = (error, req, res, next) => {
+  if (error.status_code !== UNAUTHORIZED) return next(error);
+  res.locals.title = "Unauthorized";
+  res.locals.error = error;
+  res.status(UNAUTHORIZED).render("http_error");
 };
 
 export const forbidden_handler = (error, req, res, next) => {
