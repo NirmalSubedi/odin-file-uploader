@@ -30,8 +30,9 @@ export const missing_resource_response = (req, res, next) => {
 
 export const not_found_handler = (error, req, res, next) => {
   if (error.status_code !== NOT_FOUND) return next(error);
-  res.locals.message = error.message;
-  res.status(NOT_FOUND).render("page_not_found");
+  res.locals.title = "Page not found";
+  res.locals.error = error;
+  res.status(NOT_FOUND).render("http_error");
 };
 
 export const forbidden_error_handler = (error, req, res, next) => {
