@@ -10,7 +10,6 @@
     <h1>File uploader</h1>
     <p>Upload files.</p>
     <% if (locals.user) { %>
-    Signed in as: <%= user.email %>
     <h2>Upload new file</h2>
     <form action="/upload" method="post" enctype="multipart/form-data">
       <div>
