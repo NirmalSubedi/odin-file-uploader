@@ -248,15 +248,19 @@ app
 
 app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   const { id } = req.params;
-  const folder = await db.select_folder({ id });
-  if (folder) {
-    const is_folder_owner = folder.user_email === req.user.email;
-    if (is_folder_owner) {
-      await db.delete_folder({ id });
-      res.redirect("/folders");
-    } else
-      next(new ForbiddenError("You do not have access to delete this folder."));
-  } else next(new NotFoundError("Folder not found"));
+  try {
+    await db.delete_folder({ id, user_email: req.user.email });
+    res.redirect("/folders");
+  } catch (error) {
+    if (
+      error.message.includes(
+        "An operation failed because it depends on one or more records that were required but not found. No record was found for a delete.",
+      )
+    ) {
+      return next(new NotFoundError("Folder not found"));
+    }
+    next(error);
+  }
 });
 
 app.use(missing_resource_response);
