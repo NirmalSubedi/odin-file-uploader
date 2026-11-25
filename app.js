@@ -210,7 +210,7 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
       res.render("folder");
     } else
       next(new ForbiddenError("You do not have access to view this folder."));
-  } else next(new NotFoundError("Folder not found"));
+  } else next(new NotFoundError("Folder not found."));
 });
 
 app
@@ -228,7 +228,7 @@ app
         next(
           new ForbiddenError("You do not have access to update this folder."),
         );
-    } else next(new NotFoundError("Folder not found"));
+    } else next(new NotFoundError("Folder not found."));
   })
   .post(check_auth(), async (req, res, next) => {
     const { id } = req.params;
@@ -243,7 +243,7 @@ app
         next(
           new ForbiddenError("You do not have access to update this folder."),
         );
-    } else next(new NotFoundError("Folder not found"));
+    } else next(new NotFoundError("Folder not found."));
   });
 
 app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
@@ -257,7 +257,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
         "An operation failed because it depends on one or more records that were required but not found. No record was found for a delete.",
       )
     ) {
-      return next(new NotFoundError("Folder not found"));
+      return next(new NotFoundError("Folder not found."));
     }
     next(error);
   }
