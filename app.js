@@ -231,7 +231,19 @@ app
     } else next(new NotFoundError("Folder not found"));
   })
   .post(check_auth(), async (req, res) => {
-    res.send("update folder");
+    const { id } = req.params;
+    const { name } = req.body;
+    const folder = await db.select_folder({ id });
+    if (folder) {
+      const is_folder_owner = folder.user_email === req.user.email;
+      if (is_folder_owner) {
+        await db.update_folder({ id, name });
+        res.redirect("/folders");
+      } else
+        next(
+          new ForbiddenError("You do not have access to update this folder."),
+        );
+    } else next(new NotFoundError("Folder not found"));
   });
 
 app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
