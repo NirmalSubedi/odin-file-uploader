@@ -197,7 +197,7 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
   const { id } = req.params;
   const folder = await db.select_folder({ id });
   if (folder) {
-    const is_folder_owner = folder.user_email === req.user;
+    const is_folder_owner = folder.user_email === req.user.email;
     if (is_folder_owner) {
       res.locals.folder = folder;
       res.render("folder");
