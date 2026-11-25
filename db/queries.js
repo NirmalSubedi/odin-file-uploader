@@ -43,8 +43,9 @@ export const select_user_folders = async (user) => {
 };
 
 export const update_folder = async (folder) => {
-  const { name, id } = folder;
-  const result = await prisma.users.update({
+  const id = Number(folder.id);
+  const { name } = folder;
+  const result = await prisma.folders.update({
     where: { id },
     data: { name },
   });
