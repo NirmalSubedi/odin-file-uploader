@@ -20,6 +20,7 @@ import {
   missing_resource_response,
   not_found_handler,
   server_error_handler,
+  unauthorized_handler,
 } from "./controllers/error_controller.js";
 import {
   check_signin,
@@ -29,6 +30,7 @@ import { prisma } from "./db/prisma.js";
 import * as db from "./db/queries.js";
 import { ForbiddenError } from "./errors/ForbiddenError.js";
 import { NotFoundError } from "./errors/NotFoundError.js";
+import { UnauthorizedError } from "./errors/UnauthorizedError.js";
 
 const customFields = {
   usernameField: "email",
@@ -70,7 +72,12 @@ const app = express();
 const check_auth = (config) => (req, res, next) => {
   if (req.isAuthenticated()) next();
   else if (config?.on_fail) config.on_fail(req, res, next);
-  else res.sendStatus(UNAUTHORIZED);
+  else
+    next(
+      new UnauthorizedError(
+        `You need to sign in to ${req.method.toLowerCase()} ${req.originalUrl}.`,
+      ),
+    );
 };
 const upload = multer({ dest: "./uploads" });
 
@@ -217,6 +224,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
+app.use(unauthorized_handler);
 app.use(forbidden_handler);
 app.use(server_error_handler);
 
