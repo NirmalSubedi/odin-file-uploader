@@ -15,7 +15,24 @@
     <% if (locals.folders.length>0) { %>
     <ul>
       <% folders.forEach(folder => { %>
-      <li><a href="/folders/<%= folder.id %>"><%= folder.name %></a></li>
+      <li>
+        <a
+          href="/folders/<%= folder.id %>"
+          aria-label="Open <%= folder.name %> folder"
+        ><%= folder.name %></a>
+        <div>
+          <a
+            href="/folders/update/<%= folder.id %>"
+            id="folder_update_<%=folder.id%>"
+            aria-labelledby="folder_update_<%=folder.id%> folder_<%=folder.id%>_label"
+          >Update</a> | <a
+            href="/folders/delete/<%= folder.id %>"
+            id="folder_delete_<%=folder.id%>"
+            aria-labelledby="folder_delete_<%=folder.id%> folder_<%=folder.id%>_label"
+          >Delete</a>
+          <span aria-hidden="true" hidden id="folder_<%=folder.id%>_label"><%= folder.name %> folder</span>
+        </div>
+      </li>
       <% }) %>
     </ul>
     <% } else { %>
