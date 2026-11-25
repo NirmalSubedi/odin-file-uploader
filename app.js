@@ -213,9 +213,14 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
   } else next(new NotFoundError("Folder not found"));
 });
 
-app.route("/folders/update/:id").post(check_auth(), async (req, res) => {
-  res.send("update folder");
-});
+app
+  .route("/folders/update/:id")
+  .get((req, res) => {
+    res.send("render folder to update");
+  })
+  .post(check_auth(), async (req, res) => {
+    res.send("update folder");
+  });
 
 app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
   res.send("delete folder");
