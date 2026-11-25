@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/title', {title:`Update folder: ${folder.name}`}) %>
+  </head>
+  <body>
+    <h1>Update <%= folder.name %></h1>
+    <form action="/folders/update/<%= folder.id %>" method="post">
+      <%- include('partials/input', {label:'New folder name'}) %>
+      <button type="submit">Update folder</button>
+    </form>
+  </body>
+</html>
