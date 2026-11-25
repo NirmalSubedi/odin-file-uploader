@@ -7,6 +7,7 @@ import multer from "multer";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
+  FORBIDDEN,
   PORT,
   SALT_LENGTH,
   SESSION_COOKIE_MAX_AGE,
@@ -195,8 +196,11 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
   const { id } = req.params;
   const folder = await db.select_folder({ id });
   if (folder) {
-    res.locals.folder = folder;
-    res.render("folder");
+    const is_folder_owner = folder.user_email === req.user;
+    if (is_folder_owner) {
+      res.locals.folder = folder;
+      res.render("folder");
+    } else res.sendStatus(FORBIDDEN);
   } else next(new NotFoundError("Folder not found"));
 });
 
