@@ -53,8 +53,8 @@ export const update_folder = async (folder) => {
 };
 
 export const delete_folder = async (folder) => {
-  const { id } = folder;
-  const result = await prisma.users.delete({
+  const id = Number(folder.id);
+  const result = await prisma.folders.delete({
     where: { id },
   });
   return result;
