@@ -1,5 +1,10 @@
 import { matchedData, validationResult } from "express-validator";
-import { BAD_REQUEST, INTERNAL_SERVER_ERROR, NOT_FOUND } from "../config.js";
+import {
+  BAD_REQUEST,
+  FORBIDDEN,
+  INTERNAL_SERVER_ERROR,
+  NOT_FOUND,
+} from "../config.js";
 import { BadRequestError } from "../errors/BadRequestError.js";
 import { NotFoundError } from "../errors/NotFoundError.js";
 
@@ -27,6 +32,11 @@ export const not_found_handler = (error, req, res, next) => {
   if (error.statusCode !== NOT_FOUND) return next(error);
   res.locals.message = error.message;
   res.status(NOT_FOUND).render("page_not_found");
+};
+
+export const forbidden_error_handler = (error, req, res, next) => {
+  if (error.statusCode !== FORBIDDEN) return next(error);
+  res.sendStatus(FORBIDDEN);
 };
 
 export const server_error_handler = (error, req, res, next) => {
