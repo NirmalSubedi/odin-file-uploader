@@ -16,7 +16,7 @@ import {
 import {
   bad_request_handler,
   correct_values_for,
-  forbidden_error_handler,
+  forbidden_handler,
   missing_resource_response,
   not_found_handler,
   server_error_handler,
@@ -217,7 +217,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
 app.use(missing_resource_response);
 app.use(not_found_handler);
 app.use(bad_request_handler);
-app.use(forbidden_error_handler);
+app.use(forbidden_handler);
 app.use(server_error_handler);
 
 app.listen(PORT, (error) => {

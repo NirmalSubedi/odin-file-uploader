@@ -35,7 +35,7 @@ export const not_found_handler = (error, req, res, next) => {
   res.status(NOT_FOUND).render("http_error");
 };
 
-export const forbidden_error_handler = (error, req, res, next) => {
+export const forbidden_handler = (error, req, res, next) => {
   if (error.status_code !== FORBIDDEN) return next(error);
   res.locals.title = "Forbidden";
   res.locals.error = error;
