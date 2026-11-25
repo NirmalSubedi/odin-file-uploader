@@ -216,8 +216,19 @@ app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
 app
   .route("/folders/update/:id")
   .all(check_auth())
-  .get((req, res) => {
-    res.send("render folder to update");
+  .get(async (req, res, next) => {
+    const { id } = req.params;
+    const folder = await db.select_folder({ id });
+    if (folder) {
+      const is_folder_owner = folder.user_email === req.user.email;
+      if (is_folder_owner) {
+        res.locals.folder = folder;
+        res.render("folder_update_form");
+      } else
+        next(
+          new ForbiddenError("You do not have access to update this folder."),
+        );
+    } else next(new NotFoundError("Folder not found"));
   })
   .post(check_auth(), async (req, res) => {
     res.send("update folder");
