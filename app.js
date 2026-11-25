@@ -222,6 +222,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
 });
 
 app.use(missing_resource_response);
+
 app.use(not_found_handler);
 app.use(bad_request_handler);
 app.use(unauthorized_handler);
