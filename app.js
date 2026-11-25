@@ -230,7 +230,7 @@ app
         );
     } else next(new NotFoundError("Folder not found"));
   })
-  .post(check_auth(), async (req, res) => {
+  .post(check_auth(), async (req, res, next) => {
     const { id } = req.params;
     const { name } = req.body;
     const folder = await db.select_folder({ id });
@@ -246,7 +246,7 @@ app
     } else next(new NotFoundError("Folder not found"));
   });
 
-app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
+app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   const { id } = req.params;
   const folder = await db.select_folder({ id });
   if (folder) {
