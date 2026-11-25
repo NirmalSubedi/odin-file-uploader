@@ -247,7 +247,16 @@ app
   });
 
 app.route("/folders/delete/:id").post(check_auth(), async (req, res) => {
-  res.send("delete folder");
+  const { id } = req.params;
+  const folder = await db.select_folder({ id });
+  if (folder) {
+    const is_folder_owner = folder.user_email === req.user.email;
+    if (is_folder_owner) {
+      await db.delete_folder({ id });
+      res.redirect("/folders");
+    } else
+      next(new ForbiddenError("You do not have access to delete this folder."));
+  } else next(new NotFoundError("Folder not found"));
 });
 
 app.use(missing_resource_response);
