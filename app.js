@@ -219,16 +219,16 @@ app
   .get(async (req, res, next) => {
     const { id } = req.params;
     const folder = await db.select_folder({ id });
-    if (folder) {
-      const is_folder_owner = folder.user_email === req.user.email;
-      if (is_folder_owner) {
-        res.locals.folder = folder;
-        res.render("folder_update");
-      } else
-        next(
-          new ForbiddenError("You do not have access to update this folder."),
-        );
-    } else next(new NotFoundError("Folder not found."));
+    if (!folder) return next(new NotFoundError("Folder not found."));
+
+    const is_folder_owner = folder.user_email === req.user.email;
+    if (!is_folder_owner)
+      return next(
+        new ForbiddenError("You do not have access to update this folder."),
+      );
+
+    res.locals.folder = folder;
+    res.render("folder_update");
   })
   .post(check_auth(), async (req, res, next) => {
     const { id } = req.params;
