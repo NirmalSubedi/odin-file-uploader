@@ -267,6 +267,11 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   }
 });
 
+app.route("/folders/:id/upload").post(check_auth(), async (req, res, next) => {
+  const { id } = req.params;
+  res.send(`upload file to folder ${id}`);
+});
+
 app.use(missing_resource_response);
 
 app.use(not_found_handler);
