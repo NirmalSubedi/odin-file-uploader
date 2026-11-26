@@ -79,7 +79,6 @@ const check_auth = (config) => (req, res, next) => {
       ),
     );
 };
-const upload = multer({ dest: "./uploads" });
 
 app.set("view engine", "ejs");
 
@@ -183,10 +182,6 @@ app.route("/signout").get((req, res, next) => {
   });
 });
 
-app.route("/upload").post(check_auth(), upload.single("file"), (req, res) => {
-  res.redirect("/");
-});
-
 app.route("/folders").get(check_auth(), async (req, res) => {
   const { email } = req.user;
   res.locals.folders = await db.select_user_folders({ email });
@@ -267,9 +262,12 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   }
 });
 
+const upload = multer({ dest: "./uploads" });
+
 app.route("/folders/:id/upload").post(check_auth(), async (req, res, next) => {
   const { id } = req.params;
   res.send(`upload file to folder ${id}`);
+  upload.single("file");
 });
 
 app.use(missing_resource_response);
