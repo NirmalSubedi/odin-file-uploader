@@ -270,13 +270,28 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   }
 });
 
-const upload = multer({ dest: "./uploads" });
+app.route("/folders/:id/upload").post(
+  check_auth(),
+  async (req, res, next) => {
+    const { id } = req.params;
+    const upload = multer({ dest: `./uploads/${id}` });
+    req.upload_time_start = performance.now();
+    upload.single("file")(req, res, next);
+  },
+  async (req, res) => {
+    const upload_time = performance.now() - req.upload_time_start;
+    const { id } = req.params;
 
-app.route("/folders/:id/upload").post(check_auth(), async (req, res, next) => {
-  const { id } = req.params;
-  res.send(`upload file to folder ${id}`);
-  upload.single("file");
-});
+    await db.insert_file({
+      upload_time,
+      size: req.file.size,
+      folder_id: req.params.id,
+      name: req.file.originalname,
+    });
+
+    res.redirect(`/folders/${id}`);
+  },
+);
 
 app.use(missing_resource_response);
 
