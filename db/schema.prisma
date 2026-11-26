@@ -33,7 +33,6 @@ model files {
   name        String
   size        Int
   upload_time Float // Unit: ms
-  content     String
   folder      folders @relation(fields: [folder_id], references: [id])
   folder_id   Int
 }
