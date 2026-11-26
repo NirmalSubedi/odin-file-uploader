@@ -143,7 +143,7 @@ app
       try {
         req.login(req.user, (error) => {
           if (error) next(error);
-          res.redirect("/");
+          res.redirect("/folders");
         });
       } catch (error) {
         next(error);
@@ -171,7 +171,7 @@ app
       }
       req.login(user, (error) => {
         if (error) return next(error);
-        res.redirect("/");
+        res.redirect("/folders");
       });
     })(req, res, next);
   });
