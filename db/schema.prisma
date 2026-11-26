@@ -29,9 +29,11 @@ model folders {
 }
 
 model files {
-  id        Int     @id @default(autoincrement())
-  name      String
-  content   String
-  folder    folders @relation(fields: [folder_id], references: [id])
-  folder_id Int
+  id          Int     @id @default(autoincrement())
+  name        String
+  size        Int
+  upload_time Float // Unit: ms
+  content     String
+  folder      folders @relation(fields: [folder_id], references: [id])
+  folder_id   Int
 }
