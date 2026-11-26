@@ -4,6 +4,7 @@ import express from "express";
 import express_session from "express-session";
 import { body, matchedData, validationResult } from "express-validator";
 import multer from "multer";
+import fs from "node:fs/promises";
 import passport from "passport";
 import { Strategy as LocalsStrategy } from "passport-local";
 import {
@@ -191,8 +192,14 @@ app.route("/folders").get(check_auth(), async (req, res) => {
 app.route("/folders/insert").post(check_auth(), async (req, res) => {
   const { email: user_email } = req.user;
   const { name = "" } = req.body;
-  if (name.trim().length > 0) await db.insert_folder({ name, user_email });
+
+  let folder;
+  if (name.trim().length > 0)
+    folder = await db.insert_folder({ name, user_email });
+
   res.redirect("/folders");
+
+  if (folder) await fs.mkdir(`./uploads/${folder.id}`);
 });
 
 app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
