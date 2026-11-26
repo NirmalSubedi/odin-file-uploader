@@ -60,3 +60,12 @@ export const delete_folder = async (folder) => {
   });
   return result;
 };
+
+export const insert_file = async (file) => {
+  const folder_id = Number(file.folder_id);
+  const { name, size, upload_time } = file;
+  const result = await prisma.files.create({
+    data: { name, size, upload_time, folder_id },
+  });
+  return result;
+};
