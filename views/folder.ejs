@@ -8,6 +8,20 @@
   <body>
     <%- include('partials/nav') %>
     <h1><%= folder.name %></h1>
+    <div>
+      <a
+        href="/folders/update/<%= folder.id %>"
+      >Update folder</a> | <form
+        action="/folders/delete/<%= folder.id %>"
+        method="post"
+        style="display:inline-block"
+      >
+        <button
+          onclick="return confirm('Are you sure you want to delete this folder and all its files?');"
+          type="submit"
+        >Delete folder</button>
+      </form>
+    </div>
     <% if (folder.files.length>0) { %>
     <ul>
       <% folder.files.forEach(file => { %>
