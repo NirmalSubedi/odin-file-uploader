@@ -279,7 +279,7 @@ app.route("/folders/:id/upload").post(
     req.upload_time_start = performance.now();
     upload.single("file")(req, res, next);
   },
-  async (req, res) => {
+  async (req, res, next) => {
     const upload_time = performance.now() - req.upload_time_start;
     const { id } = req.params;
 
