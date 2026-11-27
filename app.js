@@ -294,6 +294,10 @@ app.route("/folders/:id/upload").post(
   },
 );
 
+app.route("/files/:id").get(check_auth(), async (req, res) => {
+  res.send("render file detail");
+});
+
 app.use(missing_resource_response);
 
 app.use(not_found_handler);
