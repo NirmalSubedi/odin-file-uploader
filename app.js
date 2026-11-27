@@ -294,8 +294,11 @@ app.route("/folders/:id/upload").post(
   },
 );
 
-app.route("/files/:id").get(check_auth(), async (req, res) => {
-  res.send("render file detail");
+app.route("/files/:id").get(check_auth(), async (req, res, next) => {
+  const file = await db.select_file({ id: req.params.id });
+  if (!file) return next(new NotFoundError("File not found."));
+  res.locals.file = file;
+  res.render("file");
 });
 
 app.use(missing_resource_response);
