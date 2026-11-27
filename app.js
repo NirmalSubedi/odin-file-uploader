@@ -239,7 +239,9 @@ app
     const { id } = req.params;
     const { name } = req.body;
     try {
-      await db.update_folder({ id, name, user_email: req.user.email });
+      if (name?.trim()?.length > 0) {
+        await db.update_folder({ id, name, user_email: req.user.email });
+      }
       res.redirect(`/folders`);
     } catch (error) {
       if (
