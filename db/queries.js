@@ -71,7 +71,7 @@ export const insert_file = async (file) => {
 };
 
 export const select_file = async (file) => {
-  const { id } = file;
+  const id = Number(file.id);
   const result = await prisma.files.findFirst({ where: { id } });
   return result;
 };
