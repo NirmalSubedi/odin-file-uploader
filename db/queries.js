@@ -63,9 +63,19 @@ export const delete_folder = async (folder) => {
 
 export const insert_file = async (file) => {
   const folder_id = Number(file.folder_id);
-  const { name, size, upload_time } = file;
-  const result = await prisma.files.create({
-    data: { name, size, upload_time, folder_id },
+  const { name, size, upload_time, email } = file;
+  const result = await prisma.users.update({
+    where: { email },
+    data: {
+      folders: {
+        update: {
+          where: { id: folder_id },
+          data: {
+            files: { create: { name, size, upload_time } },
+          },
+        },
+      },
+    },
   });
   return result;
 };
