@@ -298,11 +298,7 @@ app.route("/folders/:id/upload").post(
           "An operation failed because it depends on one or more records that were required but not found. No 'folders' record was found for a nested update on one-to-many relation 'foldersTousers'.",
         )
       ) {
-        return next(
-          new ForbiddenError(
-            "You do not have access to upload the file in this folder.",
-          ),
-        );
+        return next(new NotFoundError("Folder not found."));
       }
       next(error);
     }
