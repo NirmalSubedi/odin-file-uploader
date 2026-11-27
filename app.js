@@ -283,14 +283,29 @@ app.route("/folders/:id/upload").post(
     const upload_time = performance.now() - req.upload_time_start;
     const { id } = req.params;
 
-    await db.insert_file({
-      upload_time,
-      size: req.file.size,
-      folder_id: req.params.id,
-      name: req.file.originalname,
-    });
-
-    res.redirect(`/folders/${id}`);
+    try {
+      await db.insert_file({
+        email: req.user.email,
+        upload_time,
+        size: req.file.size,
+        folder_id: req.params.id,
+        name: req.file.originalname,
+      });
+      res.redirect(`/folders/${id}`);
+    } catch (error) {
+      if (
+        error.message.includes(
+          "An operation failed because it depends on one or more records that were required but not found. No 'folders' record was found for a nested update on one-to-many relation 'foldersTousers'.",
+        )
+      ) {
+        return next(
+          new ForbiddenError(
+            "You do not have access to upload the file in this folder.",
+          ),
+        );
+      }
+      next(error);
+    }
   },
 );
 
