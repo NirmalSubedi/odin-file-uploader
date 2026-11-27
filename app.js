@@ -295,7 +295,10 @@ app.route("/folders/:id/upload").post(
 );
 
 app.route("/files/:id").get(check_auth(), async (req, res, next) => {
-  const file = await db.select_file({ id: req.params.id });
+  const file = await db.select_file({
+    id: req.params.id,
+    email: req.user.email,
+  });
   if (!file) return next(new NotFoundError("File not found."));
   res.locals.file = file;
   res.render("file");

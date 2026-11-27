@@ -72,6 +72,27 @@ export const insert_file = async (file) => {
 
 export const select_file = async (file) => {
   const id = Number(file.id);
-  const result = await prisma.files.findFirst({ where: { id } });
+  const { email } = file;
+
+  let result = await prisma.users.findFirst({
+    select: {
+      folders: {
+        select: {
+          files: {
+            where: { id },
+          },
+        },
+      },
+    },
+    where: { email },
+  });
+
+  // Unwrapping
+  if (result) {
+    const { folders } = result;
+    const { files } = folders[0];
+    result = files[0];
+  }
+
   return result;
 };
