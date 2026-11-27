@@ -194,7 +194,6 @@ app.route("/folders/insert").post(check_auth(), async (req, res) => {
   const { email: user_email } = req.user;
   const { name = "" } = req.body;
 
-  let folder;
   if (name.trim().length > 0)
     folder = await db.insert_folder({ name, user_email });
 
