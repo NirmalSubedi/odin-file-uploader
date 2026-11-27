@@ -29,6 +29,7 @@ import {
 } from "./controllers/validate_controller.js";
 import { prisma } from "./db/prisma.js";
 import * as db from "./db/queries.js";
+import { BadRequestError } from "./errors/BadRequestError.js";
 import { ForbiddenError } from "./errors/ForbiddenError.js";
 import { NotFoundError } from "./errors/NotFoundError.js";
 import { UnauthorizedError } from "./errors/UnauthorizedError.js";
@@ -272,6 +273,12 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
 
 app.route("/folders/:id/upload").post(
   check_auth(),
+  body("file").notEmpty(),
+  async (req, res, next) => {
+    const { id } = req.params;
+    res.locals.folder = await db.select_folder({ id });
+    correct_values_for(`folder`)(req, res, next);
+  },
   async (req, res, next) => {
     const { id } = req.params;
     const upload = multer({ dest: `./uploads/${id}` });
