@@ -273,12 +273,6 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
 
 app.route("/folders/:id/upload").post(
   check_auth(),
-  body("file").notEmpty(),
-  async (req, res, next) => {
-    const { id } = req.params;
-    res.locals.folder = await db.select_folder({ id });
-    correct_values_for(`folder`)(req, res, next);
-  },
   async (req, res, next) => {
     const { id } = req.params;
     const upload = multer({ dest: `./uploads/${id}` });
