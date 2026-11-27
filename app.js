@@ -260,7 +260,7 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   try {
     const folder = await db.delete_folder({ id, user_email: req.user.email });
     res.redirect("/folders");
-    await fs.rmdir(`./uploads/${folder.id}`);
+    await fs.rm(`./uploads/${folder.id}`, { recursive: true, force: true });
   } catch (error) {
     if (
       error.message.includes(
