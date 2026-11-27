@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%- include('partials/title', {title: `File: ${file.name}`}) %>
+  </head>
+  <body>
+    <%- include('partials/nav') %>
+    <h1>File: <%= file.name %></h1>
+    <p>Upload time: <%= (file.upload_time).toFixed(2) %>ms</p>
+    <p>Size: <%= file.size %> Bytes</p>
+  </body>
+</html>
