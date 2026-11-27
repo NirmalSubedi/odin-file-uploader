@@ -199,8 +199,6 @@ app.route("/folders/insert").post(check_auth(), async (req, res) => {
     folder = await db.insert_folder({ name, user_email });
 
   res.redirect("/folders");
-
-  if (folder) await fs.mkdir(`./uploads/${folder.id}`);
 });
 
 app.route("/folders/:id").get(check_auth(), async (req, res, next) => {
@@ -260,7 +258,6 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
   try {
     const folder = await db.delete_folder({ id, user_email: req.user.email });
     res.redirect("/folders");
-    await fs.rm(`./uploads/${folder.id}`, { recursive: true, force: true });
   } catch (error) {
     if (
       error.message.includes(
@@ -277,7 +274,7 @@ app.route("/folders/:id/upload").post(
   check_auth(),
   async (req, res, next) => {
     const { id } = req.params;
-    const upload = multer({ dest: `./uploads/${id}` });
+    const upload = multer({ dest: `./uploads` });
     req.upload_time_start = performance.now();
     upload.single("file")(req, res, next);
   },
