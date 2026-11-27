@@ -273,7 +273,6 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
 app.route("/folders/:id/upload").post(
   check_auth(),
   async (req, res, next) => {
-    const { id } = req.params;
     const upload = multer({ dest: `./uploads` });
     req.upload_time_start = performance.now();
     upload.single("file")(req, res, next);
