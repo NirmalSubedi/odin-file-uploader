@@ -279,14 +279,16 @@ app.route("/folders/:id/upload").post(
   async (req, res, next) => {
     const upload_time = performance.now() - req.upload_time_start;
     const { id } = req.params;
+    const { size, originalname } = req.file;
+    const { email } = req.user;
 
     try {
       await db.insert_file({
-        email: req.user.email,
+        email,
         upload_time,
-        size: req.file.size,
-        folder_id: req.params.id,
-        name: req.file.originalname,
+        size,
+        folder_id: id,
+        name: originalname,
       });
       res.redirect(`/folders/${id}`);
     } catch (error) {
