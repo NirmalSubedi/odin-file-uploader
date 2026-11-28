@@ -272,7 +272,14 @@ app.route("/folders/delete/:id").post(check_auth(), async (req, res, next) => {
 app.route("/folders/:id/upload").post(
   check_auth(),
   async (req, res, next) => {
-    const upload = multer({ dest: `./uploads` });
+    const storage = multer.diskStorage({
+      destination: "./uploads",
+      filename: async (req, file, cb) => {
+        req.file_id = await db.select_next_file_id();
+        cb(null, String(req.file_id));
+      },
+    });
+    const upload = multer({ storage });
     req.upload_time_start = performance.now();
     upload.single("file")(req, res, next);
   },
