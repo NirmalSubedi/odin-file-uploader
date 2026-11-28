@@ -106,3 +106,10 @@ export const select_file = async (file) => {
 
   return result;
 };
+
+export const select_next_file_id = async () => {
+  const [result] =
+    await prisma.$queryRaw`SELECT last_value + 1 AS next_value FROM files_id_seq`;
+  const { next_value } = result;
+  return next_value; // Note: returns bigInt
+};
