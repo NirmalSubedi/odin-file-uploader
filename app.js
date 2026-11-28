@@ -275,8 +275,8 @@ app.route("/folders/:id/upload").post(
     const storage = multer.diskStorage({
       destination: "./uploads",
       filename: async (req, file, cb) => {
-        req.file_id = await db.select_next_file_id();
-        cb(null, String(req.file_id));
+        req.file_id = String(await db.select_next_file_id());
+        cb(null, req.file_id);
       },
     });
     const upload = multer({ storage });
@@ -299,6 +299,7 @@ app.route("/folders/:id/upload").post(
       });
       res.redirect(`/folders/${id}`);
     } catch (error) {
+      await fs.unlink(`./uploads/${req.file_id}`);
       if (
         error.message.includes(
           "An operation failed because it depends on one or more records that were required but not found. No 'folders' record was found for a nested update on one-to-many relation 'foldersTousers'.",
